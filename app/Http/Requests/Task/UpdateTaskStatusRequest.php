@@ -11,6 +11,17 @@ class UpdateTaskStatusRequest extends FormRequest
 {
     use HelperTrait;
 
+    protected $stopOnFirstFailure = true;
+
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        // Only managers can create or update tasks
+        return $this->user() && $this->user()->isNormal() && $this->user()->tokenCan('task:update-status');
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,33 +34,15 @@ class UpdateTaskStatusRequest extends FormRequest
         ];
     }
 
-    public function prepareForValidation(): void
-    {
-        $oldExpectedStatus = match ((int)$this->status) {
-            TaskStatusEnum::IN_PROGRESS->value => TaskStatusEnum::PENDING->value,
-            TaskStatusEnum::COMPLETED->value => TaskStatusEnum::IN_PROGRESS->value,
-            TaskStatusEnum::OVERDUE->value => [TaskStatusEnum::PENDING->value,
-            TaskStatusEnum::IN_PROGRESS->value, TaskStatusEnum::COMPLETED->value],
-            default => TaskStatusEnum::PENDING->value,
-        };
-        $this->merge([
-            'oldExpectedStatus' => $oldExpectedStatus,
-        ]);
-    }
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
             $task = $this->route('task');
-            $newStatus = $this->status;
-
-            $result = $this->checkPreviousStatus(model: $task, newStatus: $newStatus, oldStatus: $this->oldExpectedStatus);
-
-            if (is_array($result) && $result['key'] === 'fail') {
-                $validator->errors()->add('status', $result['msg']);
+            if (!isset($task->user_id) || $task->user_id != $this->user()->id) {
+                $validator->errors()->add('status', 'You are not authorized to update this task');
             }
-
-            if (is_string($result) && $result === 'model not found') {
-                $validator->errors()->add('status', 'Task not found.');
+            if ($task->status->value == $this->status) {
+                $validator->errors()->add('status', 'Task status cannot be the same');
             }
         });
     }

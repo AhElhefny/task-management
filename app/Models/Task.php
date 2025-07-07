@@ -95,23 +95,6 @@ class Task extends Model
             ->orderByDesc('relevance');
     }
 
-    /**
-     * Scope a query to order by a given column and direction.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeSorting($query)
-    {
-        $sortable = ['created_at', 'due_date', 'priority'];
-        $column = request('sort_by');
-
-        if (!request()->has('sort_by') || !in_array($column, $sortable)) {
-            return $query;
-        }
-        $direction = request('sort_direction', 'desc') === 'asc' ? 'asc' : 'desc';
-        return $query->orderBy($column, $direction);
-    }
 
     /**
      * Scope a query to only include tasks assigned to a specific user.
@@ -122,12 +105,12 @@ class Task extends Model
      */
     public function scopeAssignedTo($query, $userId = null)
     {
-        if (is_null($userId) && !request()->has('assignee_id')) {
+        if (is_null($userId) && !request()->has('user_id')) {
             return $query;
         }
 
-        $assigneeId = $userId ?? request('assignee_id');
-        return $query->where('assignee_id', $assigneeId);
+        $userId ??= request('user_id');
+        return $query->where('user_id', $userId);
     }
 
     /**

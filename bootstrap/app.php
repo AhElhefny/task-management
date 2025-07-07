@@ -1,15 +1,16 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Foundation\Application;
-use Illuminate\Database\QueryException;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Laravel\Sanctum\Http\Middleware\CheckAbilities;
 use Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -26,9 +27,9 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->alias([
-            'role' => \App\Http\Middleware\CheckRole::class,
+            'role'      => \App\Http\Middleware\CheckRole::class,
             'abilities' => CheckAbilities::class,
-            'ability' => CheckForAnyAbility::class,
+            'ability'   => CheckForAnyAbility::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
@@ -113,6 +114,17 @@ return Application::configure(basePath: dirname(__DIR__))
                 return responseJson(
                     msg: $exception->getMessage(),
                     code: Response::HTTP_INTERNAL_SERVER_ERROR,
+                    error: true,
+                    errors: ['line' => $exception->getLine(), 'file' => $exception->getFile()]
+                );
+            }
+        });
+
+        $exceptions->render(function (AccessDeniedHttpException $exception, Request $request) {
+            if ($request->is('api/*')) {
+                return responseJson(
+                    msg: 'Access Denied' ?? $exception->getMessage(),
+                    code: Response::HTTP_FORBIDDEN,
                     error: true,
                     errors: ['line' => $exception->getLine(), 'file' => $exception->getFile()]
                 );

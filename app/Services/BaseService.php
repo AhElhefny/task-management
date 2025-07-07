@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use Illuminate\Database\Eloquent\Collection;
-
 class BaseService
 {
     /**
@@ -33,16 +31,22 @@ class BaseService
                 $query->where($conditions);
             })
                 ->when(!empty($scopes), function ($query) use ($scopes) {
-                    foreach ($scopes as $scope) {
-                        if (method_exists($this->model, 'scope' . ucfirst($scope))) {
-                            $query->$scope();
-                        }
-                    }
+                    $this->applyScopes($query, $scopes);
                 })
                 ->paginate($pagination_num);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
+    }
+
+    protected function applyScopes($query, $scopes)
+    {
+        foreach ($scopes as $scope) {
+            if (method_exists($this->model, 'scope' . ucfirst($scope))) {
+                $query->$scope();
+            }
+        }
+        return $query;
     }
 
     public function get($conditions = [], $scopes = [])
@@ -79,6 +83,11 @@ class BaseService
     public function first($conditions = [])
     {
         return $this->model::where($conditions)->firstOrFail();
+    }
+
+    public function find(int $id)
+    {
+        return $this->model::findOrFail($id);
     }
 
     public function edit($model, $data)

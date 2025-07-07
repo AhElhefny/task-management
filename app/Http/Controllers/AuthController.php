@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRoleEnum;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
-use App\Services\AuthService;
-use App\Services\BaseService;
+use App\Services\{AuthService, BaseService};
 use App\Traits\HelperTrait;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -30,7 +31,11 @@ class AuthController extends Controller
             return $this->apiResponse(msg: 'Invalid credentials', code: Response::HTTP_UNAUTHORIZED);
         }
         $token = $this->authService->login($user);
-        return $this->apiResponse(data: ['token' => $token]);
+        return $this->apiResponse(data: [
+            'token' => $token,
+            'type'  => UserRoleEnum::MANAGER->value == $user->role->value ? 'manager' : 'user',
+            'user'  => UserResource::make($user)
+        ]);
     }
 
     public function logout()

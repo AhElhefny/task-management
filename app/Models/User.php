@@ -61,6 +61,10 @@ class User extends Authenticatable
      */
     public function isManager(): bool
     {
-        return $this->role === UserRoleEnum::MANAGER;
+        return $this->role->value === UserRoleEnum::MANAGER->value;
+    }
+    public function isNormal(): bool
+    {
+        return $this->role->value === UserRoleEnum::USER->value;
     }
 }

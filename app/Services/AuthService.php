@@ -40,11 +40,11 @@ class AuthService
         }
     }
 
-    protected function getUserAbilities($user)
+    protected function getUserAbilities($user): array
     {
         return $user->role->value == UserRoleEnum::USER->value ?
-            ['task:index', 'task:update-status'] :
-            ['task:create', 'task:update', 'task:index', 'task:show', 'task:assign', 'user:index'];
+            ['task:update-status'] :
+            ['task:create', 'task:update', 'task:assign', 'user:index'];
     }
 
     public function logout()
