@@ -57,4 +57,38 @@ class TaskService extends BaseService
             throw new \Exception($e->getMessage());
         }
     }
+
+    /**
+     * Add a dependency to a task.
+     *
+     * @param Task $task
+     * @param array $request
+     * @return Task
+     * @throws \Exception
+     */
+    public function addDependency(Task $task, array $request): Task
+    {
+        $task->dependencies()->attach($request['dependency_ids']);
+        $task->load('dependencies');
+        return $task;
+    }
+
+    /**
+     * Remove a dependency from a task.
+     *
+     * @param Task $task
+     * @param int $dependencyId
+     * @return Task
+     * @throws \Exception
+     */
+    public function removeDependency(Task $task, int $dependencyId): Task
+    {
+        // Check if the dependency exists
+        if (!$task->dependencies()->where('dependency_id', $dependencyId)->exists()) {
+            throw new \Exception('This dependency does not exist');
+        }
+        $task->dependencies()->detach($dependencyId);
+        $task->load('dependencies');
+        return $task;
+    }
 }

@@ -1,10 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     AuthController,
     TaskController,
     UserController
 };
+
 
 
 Route::post('login', [AuthController::class, 'login'])->middleware('guest');
@@ -27,5 +29,8 @@ Route::group(['middleware' => ['auth:sanctum', 'throttle:task-creation']], funct
 
         Route::patch('{task}/update-status', [TaskController::class, 'updateStatus'])
             ->middleware('ability:task:update-status');
+
+        Route::post('{task}/add-dependencies', [TaskController::class, 'addDependency'])
+            ->middleware('ability:task:add-dependencies');
     });
 });

@@ -44,7 +44,7 @@ class AuthService
     {
         return $user->role->value == UserRoleEnum::USER->value ?
             ['task:update-status'] :
-            ['task:create', 'task:update', 'task:assign', 'user:index'];
+            ['task:create', 'task:update', 'task:assign', 'user:index','task:add-dependencies'];
     }
 
     public function logout()

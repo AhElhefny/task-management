@@ -44,6 +44,13 @@ class UpdateTaskStatusRequest extends FormRequest
             if ($task->status->value == $this->status) {
                 $validator->errors()->add('status', 'Task status cannot be the same');
             }
+            // If the new status is COMPLETED, check all dependencies
+            if ((int)$this->status === \App\Enums\TaskStatusEnum::COMPLETED->value) {
+                $task->load('dependencies');
+                if (!$task->areDependenciesCompletedOrCancelled()) {
+                    $validator->errors()->add('status', 'Cannot mark task as completed unless all dependencies are completed or cancelled.');
+                }
+            }
         });
     }
 }

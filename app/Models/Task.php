@@ -43,13 +43,6 @@ class Task extends Model
         return $this->belongsToMany(Task::class, 'task_dependencies', 'task_id', 'dependency_id');
     }
 
-    /**
-     * Get the tasks that depend on this task.
-     */
-    public function dependents(): BelongsToMany
-    {
-        return $this->belongsToMany(Task::class, 'task_dependencies', 'dependency_id', 'task_id');
-    }
 
     /**
      * Scope a query to only include tasks of a given status.
@@ -130,6 +123,24 @@ class Task extends Model
             }
         }
 
+        return true;
+    }
+
+    /**
+     * Check if all dependencies are completed or cancelled.
+     *
+     * @return bool
+     */
+    public function areDependenciesCompletedOrCancelled(): bool
+    {
+        if ($this->dependencies->isEmpty()) {
+            return true;
+        }
+        foreach ($this->dependencies as $dependency) {
+            if (!in_array($dependency->status, [TaskStatusEnum::COMPLETED, TaskStatusEnum::CANCELLED])) {
+                return false;
+            }
+        }
         return true;
     }
 }

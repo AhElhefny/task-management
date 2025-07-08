@@ -1,103 +1,191 @@
 # Task Manager API
 
-A powerful RESTful API built with Laravel 11+ for managing tasks, supporting features like filtering, sorting, pagination, notifications, and rate limiting.
+## 🧾 Brief Documentation on Setup & Running the Application
 
----
+### Prerequisites
 
-## 🚀 Features
+- PHP >= 8.1
+- Composer
+- Laravel 11+
+- MySQL or compatible DB
 
-- Task CRUD operations (create, list, update status, soft delete)
-- Filtering by:
-  - Status (1=Pending, 2=In Progress, 3=Completed, 4=Overdue)
-  - Due date range (`start_date`, `end_date`)
-  - Text search (`title`, `description`)
-- Sorting by `created_at`, `due_date`, `priority`
-- Pagination with metadata
-- **Email notifications** sent 24 hours before task due
-- **Rate limiting** on task creation endpoint
-- Laravel Queues & Artisan Command usage
-- OpenAPI (Swagger) Documentation
-
----
-
-## 🛠 Setup Instructions
-
-1. Clone the repository:
+### Setup Steps
 
 ```bash
-git clone https://github.com/AhElhefny/task-manager-api.git
+# 1. Clone the project
+git clone https://github.com/AhElhefny/task-management.git
 cd task-manager-api
 
-Install dependencies:
-    composer install
-    cp .env.example .env
-    php artisan key:generate
+# 2. Install PHP dependencies
+composer install
 
-Set up database in .env then run:
-    php artisan migrate --seed
+# 3. Create environment file
+cp .env.example .env
 
-Start the server:
-    php artisan serve
+# 4. Generate app key
+php artisan key:generate
 
-🔐 Rate Limiting
-The API limits how many tasks a user can create in a short time to prevent abuse.
+# 5. Set DB credentials in .env
+DB_DATABASE=task_db
+DB_USERNAME=root
+DB_PASSWORD=your_password
 
-Configured using Laravel’s built-in ThrottleRequests middleware.
+# 6. Run migrations and seeders
+php artisan migrate --seed
 
-Limit: 5 requests per minute on /api/tasks POST.
+# 7. Serve the app
+php artisan serve
 
-Returns 429 Too Many Requests if exceeded.
 
-📬 Task Notification System
-We notify users via email 24 hours before a task’s due date.
+```
 
-Artisan command: php artisan tasks:notify-for-coming
+## 📦 Project Structure Overview
 
-Scheduled to run hourly via Laravel Scheduler
+```
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/  # Task, Auth, User controllers
+│   │   ├── Middleware/   # Role middleware
+│   ├── Models/           # Task, User, Dependency
+│   ├── Services/         # Business logic
+├── routes/
+│   └── api.php           # All API routes
+├── database/
+│   ├── migrations/
+│   └── seeders/
+└── tests/                # Feature & unit tests
+```
 
-Uses queue system to send notifications asynchronously
+---
 
-Job Class: SendTaskReminderEmail
+## 🔐 Authentication
 
-Custom notification logic is in app/Notifications/NotifyForComingTasksNotification.php
+- **Login Endpoint:** `POST /api/login`
+- Uses token-based auth via Laravel Sanctum/Passport
+- Seeded actors:
+  - Manager: `manager@example.com`
+  - User: `user@example.com`
 
-📅 Task Status & Priority Enums
-    Used consistently across validation, database, and API resources.
+---
 
-Status Code	Meaning
-    1	Pending
-    2	In Progress
-    3	Completed
-    4	Overdue
+## ✅ Tasks API Endpoints
 
-Priority Code	Meaning
-    1	Low
-    2	Medium
-    3	High
+### Create Task *(Manager Only)*
 
-📄 API Documentation
-Full Swagger documentation is available in swagger.yaml. You can visualize it using:
+```http
+POST /api/tasks
+```
 
-Swagger Editor
+Body:
 
-Or Postman with the OpenAPI import
+```json
+{
+  "title": "New Task",
+  "description": "Optional",
+  "due_date": "2025-08-10 15:00"
+}
+```
 
-Also, a ready Postman Collection is available in postman/collection.json.
+### Get Tasks with Filters *(Manager + Assigned User)*
 
-🧠 Design Decisions
-Service Layer: Encapsulates business logic outside controllers.
+```http
+GET /api/tasks?status=1&user_id=5&start_date=2025-07-01&end_date=2025-08-01
+```
 
-Request Classes: For clean validation and type safety.
+### Get Task Details *(Assigned User / Manager)*
 
-Enum Integration: Centralized status/priority control.
+```http
+GET /api/tasks/{id}
+```
 
-Queue System: For non-blocking email delivery.
+### Assign Task to User *(Manager Only)*
 
-Rate Limiting: Security and abuse prevention.
+```http
+PATCH /api/tasks/{id}/assign-user
+```
 
-OpenAPI: Makes the API self-documented and testable.
+### Add Dependencies *(Manager Only)*
 
-✍️ Author
-Ahmed Ahmed Elhefny
-GitHub: AhElhefny
-Project: Task Manager API
+```http
+POST /api/tasks/{id}/add-dependencies
+```
+
+Body:
+
+```json
+{
+  "dependency_ids": [3, 6, 9]
+}
+```
+
+### Update Task Details *(Manager Only)*
+
+```http
+PUT /api/tasks/{id}
+```
+
+### Update Task Status *(Assigned User Only)*
+
+```http
+PATCH /api/tasks/{id}/update-status
+```
+
+Body:
+
+```json
+{
+  "status": 2  // 1 = Pending, 2 = Completed, 3 = Cancelled
+}
+```
+
+---
+
+## 🔐 Role-Based Authorization
+
+| Action                   | Manager | User |
+| ------------------------ | ------- | ---- |
+| Create task              | ✅       | ❌    |
+| Update task details      | ✅       | ❌    |
+| Assign task to user      | ✅       | ❌    |
+| View assigned tasks      | ✅       | ✅    |
+| Update status (assigned) | ❌       | ✅    |
+
+---
+
+## ⚙️ Tech Stack
+
+- Laravel 10
+- Sanctum / Passport (Token Auth)
+- MySQL
+- PHPUnit (Testing)
+- RESTful standards
+
+---
+
+## 🧪 Testing
+
+```bash
+php artisan test
+```
+
+Includes tests for:
+
+- Auth
+- Task creation & filtering
+- Role authorization
+- Status update
+
+---
+
+## 📌 Notes
+
+- Tasks cannot be marked complete if dependencies are incomplete
+- Queue jobs & listeners used for background processes (optional)
+- Full-text search supported on title + description
+
+---
+
+## 📄 License
+
+MIT
+

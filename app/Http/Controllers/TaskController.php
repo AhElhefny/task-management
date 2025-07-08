@@ -15,9 +15,7 @@ class TaskController extends Controller
 {
     use HelperTrait;
 
-    public function __construct(protected TaskService $taskService)
-    {
-    }
+    public function __construct(protected TaskService $taskService) {}
 
     public function index()
     {
@@ -85,47 +83,23 @@ class TaskController extends Controller
     }
 
 
-
-    // TODO:: still
     public function addDependency(Task $task, AddTaskDependencyRequest $request)
     {
-        $dependencyId = $request->validated()['dependency_id'];
-
-        // Check if the dependency already exists
-        if ($task->dependencies()->where('dependency_id', $dependencyId)->exists()) {
+        try {
+            $task = $this->taskService->addDependency($task, $request->validated());
             return $this->apiResponse(
-                msg: 'This dependency already exists',
+                msg: 'Dependency added successfully',
+                data: TaskResource::make($task),
+                code: Response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            return $this->apiResponse(
+                error: true,
+                msg: $e->getMessage(),
+                errors: ['line' => $e->getLine(), 'file' => $e->getFile()],
                 code: Response::HTTP_BAD_REQUEST
             );
         }
-
-        $task->dependencies()->attach($dependencyId);
-        $task->load('dependencies');
-
-        return $this->apiResponse(
-            msg: 'Dependency added successfully',
-            data: TaskResource::make($task),
-            code: Response::HTTP_OK
-        );
     }
 
-    public function removeDependency(Task $task, int $dependencyId)
-    {
-        // Check if the dependency exists
-        if (!$task->dependencies()->where('dependency_id', $dependencyId)->exists()) {
-            return $this->apiResponse(
-                msg: 'This dependency does not exist',
-                code: Response::HTTP_BAD_REQUEST
-            );
-        }
-
-        $task->dependencies()->detach($dependencyId);
-        $task->load('dependencies');
-
-        return $this->apiResponse(
-            msg: 'Dependency removed successfully',
-            data: TaskResource::make($task),
-            code: Response::HTTP_OK
-        );
-    }
 }

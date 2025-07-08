@@ -1,197 +1,3009 @@
 {
-  "openapi": "3.0.0",
   "info": {
-    "title": "Task Manager API",
-    "version": "1.0.0",
-    "description": "API for managing tasks with features like creation, listing, searching, updating, and notifications."
+    "_postman_id": "14b7d264-68be-46cd-a5e9-3cba6f3af71d",
+    "name": "task manager",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "23278490"
   },
-  "servers": [
+  "item": [
     {
-      "url": "http://127.0.0.1:8000/api"
+      "name": "tasks",
+      "item": [
+        {
+          "name": "tasks",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{manager_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{local}}api/tasks?status=1",
+              "host": [
+                "{{local}}api"
+              ],
+              "path": [
+                "tasks"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "1",
+                  "description": "1 = Pending, 2 = Completed, 3 = Cancelled"
+                },
+                {
+                  "key": "start_date",
+                  "value": "2025-07-13",
+                  "disabled": true
+                },
+                {
+                  "key": "end_date",
+                  "value": "2025-08-25",
+                  "disabled": true
+                },
+                {
+                  "key": "text_search",
+                  "value": "consequatur aliquid",
+                  "disabled": true
+                },
+                {
+                  "key": "user_id",
+                  "value": "8",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "## API Endpoint: Get Tasks\n\nThis endpoint retrieves a list of tasks from the server. It returns a collection of tasks along with pagination and metadata information.\n\n### Request\n\n- **Method**: GET\n    \n- **URL**: `{{local}}api/tasks`\n    \n\n### Params\n\n- status => \\[1 = Pending, 2 = Completed, 3 = Cancelled\\]\n    \n- start and end date for ffilter the due date\n    \n- text_search for search with string\n    \n- userr_id for filter the tasks with spescific user getting from endpoint \"api/users\"\n    \n\n### Response\n\nThe response is formatted in JSON and includes the following structure:\n\n- **data**: An array of task objects, where each task may contain:\n    \n    - **id**: Unique identifier for the task.\n        \n    - **title**: The title of the task.\n        \n    - **description**: A brief description of the task.\n        \n    - **status**: An object representing the task's status, including:\n        \n        - **value**: Numeric value representing the status.\n            \n        - **slug**: A URL-friendly version of the status.\n            \n        - **label**: A human-readable label for the status.\n            \n    - **due_date**: The deadline for the task.\n        \n    - **created_at**: Timestamp of when the task was created.\n        \n    - **dependencies**: An array of dependencies for the task.\n        \n- **links**: An object containing pagination links:\n    \n    - **first**: URL to the first page of results.\n        \n    - **last**: URL to the last page of results.\n        \n    - **prev**: URL to the previous page of results (if applicable).\n        \n    - **next**: URL to the next page of results (if applicable).\n        \n- **meta**: An object providing metadata about the response:\n    \n    - **current_page**: The current page number.\n        \n    - **from**: The starting index of the current page.\n        \n    - **last_page**: The total number of pages available.\n        \n    - **links**: An array of link objects for pagination.\n        \n    - **path**: The path of the request.\n        \n    - **per_page**: The number of items per page.\n        \n    - **to**: The ending index of the current page.\n        \n    - **total**: The total number of items across all pages.\n        \n- **message**: A message related to the response (if applicable).\n    \n- **status**: A status code indicating the success or failure of the request.\n    \n\n### Notes\n\n- The `data` array may be empty if there are no tasks available.\n    \n- The pagination links will be `null` if there are no additional pages of results.\n    \n- Ensure to handle cases where the response may not contain any tasks or where pagination links are not available."
+          },
+          "response": [
+            {
+              "name": "success without data retrieved for normal user",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{local}}api/tasks",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "1",
+                      "description": "1 = Pending, 2 = In Progress, 3 = Completed",
+                      "disabled": true
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "2025-06-14",
+                      "disabled": true
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-06-25",
+                      "disabled": true
+                    },
+                    {
+                      "key": "text_search",
+                      "value": "consequatur aliquid",
+                      "disabled": true
+                    },
+                    {
+                      "key": "user_id",
+                      "value": null,
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 19:53:47 GMT"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [],\n    \"links\": {\n        \"first\": \"http://task-manager-api.test/api/tasks?page=1\",\n        \"last\": \"http://task-manager-api.test/api/tasks?page=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": null,\n        \"last_page\": 1,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://task-manager-api.test/api/tasks?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://task-manager-api.test/api/tasks\",\n        \"per_page\": 15,\n        \"to\": null,\n        \"total\": 0\n    },\n    \"message\": \"Tasks retrieved successfully\",\n    \"status\": 200\n}"
+            },
+            {
+              "name": "success data retrieved for manager",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{local}}api/tasks",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "1",
+                      "description": "1 = Pending, 2 = In Progress, 3 = Completed",
+                      "disabled": true
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "2025-06-14",
+                      "disabled": true
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-06-25",
+                      "disabled": true
+                    },
+                    {
+                      "key": "text_search",
+                      "value": "consequatur aliquid",
+                      "disabled": true
+                    },
+                    {
+                      "key": "user_id",
+                      "value": null,
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 19:54:38 GMT"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"Similique ut dignissimos voluptas.\",\n            \"description\": \"Expedita aspernatur nemo doloribus error. Quis sint aliquid esse fugit qui aspernatur. Ut quaerat mollitia voluptas sed ut enim odit nam.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-08-04 10:07\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 2,\n            \"title\": \"Pariatur repudiandae occaecati et dolore.\",\n            \"description\": \"Ab saepe officia neque quidem rerum voluptates enim. Libero nemo doloremque neque quod. Accusamus debitis mollitia at similique excepturi. Commodi dolorem ut architecto libero mollitia quis. Perspiciatis aut ducimus neque commodi.\",\n            \"status\": {\n                \"value\": 1,\n                \"slug\": \"PENDING\",\n                \"label\": \"PENDING\"\n            },\n            \"due_date\": \"2025-07-10 13:36\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 3,\n            \"title\": \"Accusamus ipsam illum error.\",\n            \"description\": \"Consequatur temporibus ipsa dolor beatae et suscipit dolores nihil. Itaque consequatur error beatae iste rerum aut. Non tempora suscipit autem porro sunt ut. Et assumenda sunt optio hic recusandae est.\",\n            \"status\": {\n                \"value\": 2,\n                \"slug\": \"COMPLETED\",\n                \"label\": \"COMPLETED\"\n            },\n            \"due_date\": \"2025-07-11 23:09\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 4,\n            \"title\": \"Quod sunt et ab sit est.\",\n            \"description\": \"Asperiores vero recusandae ullam doloremque sint. Animi velit beatae quos quae. Quis quis repudiandae et labore quo. Occaecati earum eum eveniet voluptatem.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-07-13 17:54\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 5,\n            \"title\": \"Amet suscipit iure qui eos dolores.\",\n            \"description\": \"Praesentium et et commodi ut fugiat facere. Est dolores dolor molestiae similique eos facere. Et voluptas omnis error voluptates qui. Dolor nemo veritatis repellat similique quo.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-07-08 10:42\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 6,\n            \"title\": \"Consequuntur in ut quam qui nisi.\",\n            \"description\": \"Consequatur totam sequi excepturi tempora eveniet. Rerum rem et suscipit. Nobis ea nobis sed officiis fugit earum. Est sunt repudiandae suscipit dolorem qui autem. Minus delectus esse quia ut officia.\",\n            \"status\": {\n                \"value\": 2,\n                \"slug\": \"COMPLETED\",\n                \"label\": \"COMPLETED\"\n            },\n            \"due_date\": \"2025-07-18 17:59\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 7,\n            \"title\": \"Assumenda nulla ut ut rem maiores quia explicabo.\",\n            \"description\": \"Similique tenetur eligendi beatae. Impedit adipisci officia ut quia excepturi autem. Ipsam dignissimos vitae totam et pariatur.\",\n            \"status\": {\n                \"value\": 1,\n                \"slug\": \"PENDING\",\n                \"label\": \"PENDING\"\n            },\n            \"due_date\": \"2025-07-19 03:15\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 8,\n            \"title\": \"Vitae quia perferendis odit.\",\n            \"description\": \"Cum et neque sunt alias quia aut. Inventore provident laudantium perferendis. Sunt sed commodi velit ut dolor eius explicabo voluptatum. Culpa inventore architecto suscipit velit quod numquam fugit dolore.\",\n            \"status\": {\n                \"value\": 2,\n                \"slug\": \"COMPLETED\",\n                \"label\": \"COMPLETED\"\n            },\n            \"due_date\": \"2025-07-25 06:13\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 9,\n            \"title\": \"Ut reiciendis maiores modi est rerum iure voluptatibus.\",\n            \"description\": \"Minima vel quod magnam dolor. Aut non animi dolores animi deleniti. Atque sequi labore odio asperiores aut incidunt nam. Aspernatur maxime facere autem accusamus assumenda eveniet aut.\",\n            \"status\": {\n                \"value\": 1,\n                \"slug\": \"PENDING\",\n                \"label\": \"PENDING\"\n            },\n            \"due_date\": \"2025-08-03 08:49\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 10,\n            \"title\": \"Molestias totam illum cum id.\",\n            \"description\": \"Eveniet velit recusandae maiores at reprehenderit provident incidunt praesentium. Ut consectetur et reprehenderit suscipit ad fugit. Saepe possimus aperiam sunt ipsa aut quia quia.\",\n            \"status\": {\n                \"value\": 1,\n                \"slug\": \"PENDING\",\n                \"label\": \"PENDING\"\n            },\n            \"due_date\": \"2025-07-18 09:25\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 11,\n            \"title\": \"Accusamus temporibus commodi iure tempore ad.\",\n            \"description\": \"Saepe quas ut earum animi. A et corporis eius pariatur deserunt in. Officiis fuga rerum expedita aut illum fuga expedita.\",\n            \"status\": {\n                \"value\": 2,\n                \"slug\": \"COMPLETED\",\n                \"label\": \"COMPLETED\"\n            },\n            \"due_date\": \"2025-07-15 06:12\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 12,\n            \"title\": \"Enim dolor in harum libero.\",\n            \"description\": \"Sit beatae corrupti quia molestiae. Autem consequatur ad itaque commodi tempore. Reiciendis odit porro accusantium laborum sunt saepe. Alias non eius quidem soluta.\",\n            \"status\": {\n                \"value\": 1,\n                \"slug\": \"PENDING\",\n                \"label\": \"PENDING\"\n            },\n            \"due_date\": \"2025-07-14 14:06\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 13,\n            \"title\": \"Illo voluptas ut nisi consequuntur quo nihil.\",\n            \"description\": \"Vel occaecati aut quia. Eum modi ipsam minus est enim ut quis. Alias perspiciatis recusandae ipsum id reprehenderit. Incidunt modi beatae quisquam.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-07-27 03:53\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 14,\n            \"title\": \"Aut rerum officia voluptas aliquam maiores doloribus.\",\n            \"description\": \"Maxime iure dolorum reprehenderit. Officiis labore tempore exercitationem. Debitis voluptas consectetur accusantium.\",\n            \"status\": {\n                \"value\": 2,\n                \"slug\": \"COMPLETED\",\n                \"label\": \"COMPLETED\"\n            },\n            \"due_date\": \"2025-08-03 15:52\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 15,\n            \"title\": \"Reprehenderit eaque sapiente soluta aut dolores architecto.\",\n            \"description\": \"Sed autem et odio quis aspernatur. Aliquid vitae est harum vel dolores ad.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-07-31 01:59\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        }\n    ],\n    \"links\": {\n        \"first\": \"http://task-manager-api.test/api/tasks?page=1\",\n        \"last\": \"http://task-manager-api.test/api/tasks?page=4\",\n        \"prev\": null,\n        \"next\": \"http://task-manager-api.test/api/tasks?page=2\"\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 4,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://task-manager-api.test/api/tasks?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": \"http://task-manager-api.test/api/tasks?page=2\",\n                \"label\": \"2\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://task-manager-api.test/api/tasks?page=3\",\n                \"label\": \"3\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://task-manager-api.test/api/tasks?page=4\",\n                \"label\": \"4\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://task-manager-api.test/api/tasks?page=2\",\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://task-manager-api.test/api/tasks\",\n        \"per_page\": 15,\n        \"to\": 15,\n        \"total\": 51\n    },\n    \"message\": \"Tasks retrieved successfully\",\n    \"status\": 200\n}"
+            },
+            {
+              "name": "tasks with filter with status cancelled",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{local}}api/tasks?status=3",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "3",
+                      "description": "1 = Pending, 2 = Completed, 3 = Cancelled"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "2025-06-14",
+                      "disabled": true
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "2025-06-25",
+                      "disabled": true
+                    },
+                    {
+                      "key": "text_search",
+                      "value": "consequatur aliquid",
+                      "disabled": true
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 19:55:57 GMT"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"Similique ut dignissimos voluptas.\",\n            \"description\": \"Expedita aspernatur nemo doloribus error. Quis sint aliquid esse fugit qui aspernatur. Ut quaerat mollitia voluptas sed ut enim odit nam.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-08-04 10:07\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 4,\n            \"title\": \"Quod sunt et ab sit est.\",\n            \"description\": \"Asperiores vero recusandae ullam doloremque sint. Animi velit beatae quos quae. Quis quis repudiandae et labore quo. Occaecati earum eum eveniet voluptatem.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-07-13 17:54\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 5,\n            \"title\": \"Amet suscipit iure qui eos dolores.\",\n            \"description\": \"Praesentium et et commodi ut fugiat facere. Est dolores dolor molestiae similique eos facere. Et voluptas omnis error voluptates qui. Dolor nemo veritatis repellat similique quo.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-07-08 10:42\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 13,\n            \"title\": \"Illo voluptas ut nisi consequuntur quo nihil.\",\n            \"description\": \"Vel occaecati aut quia. Eum modi ipsam minus est enim ut quis. Alias perspiciatis recusandae ipsum id reprehenderit. Incidunt modi beatae quisquam.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-07-27 03:53\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 15,\n            \"title\": \"Reprehenderit eaque sapiente soluta aut dolores architecto.\",\n            \"description\": \"Sed autem et odio quis aspernatur. Aliquid vitae est harum vel dolores ad.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-07-31 01:59\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 18,\n            \"title\": \"Maxime iusto amet et est iusto blanditiis.\",\n            \"description\": \"Commodi et tempore et laudantium quidem nam atque. Tempore debitis tempore sunt labore repellendus cumque nulla. Totam vel est voluptates est veniam. Assumenda ab et sed qui.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-07-25 12:02\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 19,\n            \"title\": \"Sed doloremque praesentium consectetur voluptatibus.\",\n            \"description\": \"Enim nihil fugit sed molestias quia ea. Omnis dolorem blanditiis ipsa. Aut ea commodi ut suscipit quo doloribus. Non ab placeat cum eum qui sint sed.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-08-02 07:22\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 22,\n            \"title\": \"Dicta quod eveniet distinctio dignissimos impedit consectetur non.\",\n            \"description\": \"Eum et illo et sint. Et consequatur nisi ex reprehenderit vel soluta hic non. Impedit molestiae ullam ea sint harum. Fugit corporis similique earum.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-07-08 03:35\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 25,\n            \"title\": \"Animi voluptatem fugiat voluptatum vel ut.\",\n            \"description\": \"Distinctio aut cumque optio at deleniti. Porro dolor recusandae officia ab labore.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-07-18 00:07\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 26,\n            \"title\": \"Deserunt aspernatur architecto fuga fugit rerum sequi.\",\n            \"description\": \"Quas architecto provident enim molestiae iusto. Aut atque voluptas doloribus et a pariatur ipsa. Illo nulla consequatur iusto animi consequatur ullam.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-07-09 19:25\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 33,\n            \"title\": \"Nihil quidem laudantium dolores maxime quo.\",\n            \"description\": \"Qui ab dolor mollitia vel eveniet voluptatem. Quod minus iusto officia sed repellat. Et assumenda enim quaerat id eaque eius a placeat. Autem cupiditate a architecto iure odit est debitis.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-07-23 10:38\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 36,\n            \"title\": \"Nulla dicta autem quasi voluptas.\",\n            \"description\": \"Numquam tempora est omnis ut provident. Ea et quod quibusdam maiores est laboriosam. Voluptatem molestiae voluptatum voluptates aut. Recusandae sit ut adipisci quo sit optio.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-08-05 06:15\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 40,\n            \"title\": \"Enim quo consectetur possimus.\",\n            \"description\": \"Id iure adipisci quaerat quia pariatur rerum est odio. Qui voluptatum laborum beatae molestiae quo autem architecto. Eligendi earum accusantium assumenda laborum pariatur culpa. Omnis quos optio explicabo natus. Nisi dolorem est facilis laborum et deserunt necessitatibus.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-07-14 00:27\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        },\n        {\n            \"id\": 41,\n            \"title\": \"Odit quia rerum debitis a aspernatur saepe repellat.\",\n            \"description\": \"Architecto reiciendis voluptatem delectus enim. Eaque officia illo modi inventore ut. Ex molestiae libero fugiat perferendis est. Cumque veniam aut repudiandae deleniti qui rem. Ullam quia quam dolorem ut magnam.\",\n            \"status\": {\n                \"value\": 3,\n                \"slug\": \"CANCELLED\",\n                \"label\": \"CANCELLED\"\n            },\n            \"due_date\": \"2025-07-22 00:02\",\n            \"created_at\": \"2025-07-06 21:00\",\n            \"dependencies\": []\n        }\n    ],\n    \"links\": {\n        \"first\": \"http://task-manager-api.test/api/tasks?page=1\",\n        \"last\": \"http://task-manager-api.test/api/tasks?page=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 1,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://task-manager-api.test/api/tasks?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://task-manager-api.test/api/tasks\",\n        \"per_page\": 15,\n        \"to\": 14,\n        \"total\": 14\n    },\n    \"message\": \"Tasks retrieved successfully\",\n    \"status\": 200\n}"
+            }
+          ]
+        },
+        {
+          "name": "details",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{user_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{local}}api/tasks/1",
+              "host": [
+                "{{local}}api"
+              ],
+              "path": [
+                "tasks",
+                "1"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "success details",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{local}}api/tasks/1",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 19:31:43 GMT"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"success\",\n    \"msg\": \"Task retrieved successfully\",\n    \"code\": 200,\n    \"response_status\": {\n        \"error\": false,\n        \"validation_errors\": []\n    },\n    \"data\": {\n        \"id\": 1,\n        \"title\": \"Similique ut dignissimos voluptas.\",\n        \"description\": \"Expedita aspernatur nemo doloribus error. Quis sint aliquid esse fugit qui aspernatur. Ut quaerat mollitia voluptas sed ut enim odit nam.\",\n        \"status\": {\n            \"value\": 3,\n            \"slug\": \"CANCELLED\",\n            \"label\": \"CANCELLED\"\n        },\n        \"due_date\": \"2025-08-04 10:07\",\n        \"created_at\": \"2025-07-06 21:00\",\n        \"dependencies\": []\n    }\n}"
+            },
+            {
+              "name": "not authorized",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{local}}api/tasks/1",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks",
+                    "1"
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 19:35:05 GMT"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"fail\",\n    \"msg\": \"You are not authorized to view this task\",\n    \"code\": 422,\n    \"response_status\": {\n        \"error\": true,\n        \"validation_errors\": {\n            \"line\": 45,\n            \"file\": \"D:\\\\projects\\\\task-manager-api\\\\app\\\\Services\\\\TaskService.php\"\n        }\n    },\n    \"data\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "create",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{manager_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "tests",
+                  "description": "['required', 'string', 'min:5', 'max:255']",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "test desc",
+                  "description": "['nullable', 'string', 'max:1000']",
+                  "type": "text"
+                },
+                {
+                  "key": "due_date",
+                  "value": "2026-08-22 02:30",
+                  "description": "['required', 'date_format:Y-m-d H:i', 'after:now'],",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{local}}api/tasks",
+              "host": [
+                "{{local}}api"
+              ],
+              "path": [
+                "tasks"
+              ]
+            },
+            "description": "### API Endpoint: Create a New Task\n\nThis endpoint allows you to create a new task in the system by submitting a POST request. The purpose of this request is to enable users to define new tasks with essential attributes such as title, description, due date, and priority.\n\n#### Request Parameters\n\nThe request body must be sent as `form-data` and should include the following parameters:\n\n- **title** (string, required):\n    \n    - The title of the task.\n        \n    - Constraints: Minimum length of 5 characters and a maximum length of 255 characters.\n        \n\n#### Response Structure\n\nUpon a successful request, the server will respond with a `201 Created` status and a JSON object containing the following fields:\n\n- **key**: A unique identifier for the request (may be empty).\n    \n- **msg**: A message indicating the result of the request (may be empty).\n    \n- **code**: A status code indicating the result of the operation (0 indicates success).\n    \n- **response_status**: An object that contains:\n    \n    - **error**: A boolean indicating if there was an error (true if validation errors exist).\n        \n    - **validation_errors**: An array that will contain any validation errors encountered during the request (empty if no errors).\n        \n- **data**: An object containing the created task's details:\n    \n    - **id**: The unique identifier of the newly created task.\n        \n    - **title**: The title of the task.\n        \n    - **description**: The description of the task (may be null).\n        \n    - **status**: An object representing the task's status, including:\n        \n        - **value**: The status value.\n            \n        - **slug**: A slug representation of the status.\n            \n        - **label**: A human-readable label for the status.\n            \n    - **due_date**: The due date of the task.\n        \n    - **created_at**: Timestamp of when the task was created.\n        \n\nThis endpoint is essential for task management within the application, allowing users to effectively organize and prioritize their tasks."
+          },
+          "response": [
+            {
+              "name": "create",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "title",
+                      "value": "tests",
+                      "description": "['required', 'string', 'min:5', 'max:255']",
+                      "type": "text"
+                    },
+                    {
+                      "key": "description",
+                      "value": "",
+                      "description": "['nullable', 'string', 'max:1000']",
+                      "type": "text"
+                    },
+                    {
+                      "key": "due_date",
+                      "value": "2026-08-22 02:30",
+                      "description": "['required', 'date_format:Y-m-d H:i', 'after:now'],",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/tasks",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks"
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 18:07:51 GMT"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"fail\",\n    \"msg\": \"Invalid ability provided.\",\n    \"code\": 422,\n    \"response_status\": {\n        \"error\": true,\n        \"validation_errors\": {\n            \"line\": 643,\n            \"file\": \"D:\\\\projects\\\\task-manager-api\\\\vendor\\\\laravel\\\\framework\\\\src\\\\Illuminate\\\\Foundation\\\\Exceptions\\\\Handler.php\"\n        }\n    },\n    \"data\": null\n}"
+            },
+            {
+              "name": "access denied",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "title",
+                      "value": "tests",
+                      "description": "['required', 'string', 'min:5', 'max:255']",
+                      "type": "text"
+                    },
+                    {
+                      "key": "description",
+                      "value": "",
+                      "description": "['nullable', 'string', 'max:1000']",
+                      "type": "text"
+                    },
+                    {
+                      "key": "due_date",
+                      "value": "2026-08-22 02:30",
+                      "description": "['required', 'date_format:Y-m-d H:i', 'after:now'],",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/tasks",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 18:19:29 GMT"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"fail\",\n    \"msg\": \"Access Denied\",\n    \"code\": 403,\n    \"response_status\": {\n        \"error\": true,\n        \"validation_errors\": {\n            \"line\": 643,\n            \"file\": \"D:\\\\projects\\\\task-manager-api\\\\vendor\\\\laravel\\\\framework\\\\src\\\\Illuminate\\\\Foundation\\\\Exceptions\\\\Handler.php\"\n        }\n    },\n    \"data\": null\n}"
+            },
+            {
+              "name": "success create",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "title",
+                      "value": "tests",
+                      "description": "['required', 'string', 'min:5', 'max:255']",
+                      "type": "text"
+                    },
+                    {
+                      "key": "description",
+                      "value": "test desc",
+                      "description": "['nullable', 'string', 'max:1000']",
+                      "type": "text"
+                    },
+                    {
+                      "key": "due_date",
+                      "value": "2026-08-22 02:30",
+                      "description": "['required', 'date_format:Y-m-d H:i', 'after:now'],",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/tasks",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 18:27:01 GMT"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"success\",\n    \"msg\": \"Task created successfully\",\n    \"code\": 201,\n    \"response_status\": {\n        \"error\": false,\n        \"validation_errors\": []\n    },\n    \"data\": {\n        \"id\": 51,\n        \"title\": \"tests\",\n        \"description\": \"test desc\",\n        \"status\": {\n            \"value\": 1,\n            \"slug\": \"PENDING\",\n            \"label\": \"PENDING\"\n        },\n        \"due_date\": \"2026-08-22 02:30\",\n        \"created_at\": \"2025-07-07 18:27\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{manager_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "tests new",
+                  "description": "'required', 'string', 'min:5', 'max:255'",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "tests tests",
+                  "description": "'nullable', 'string', 'max:1000'",
+                  "type": "text"
+                },
+                {
+                  "key": "due_date",
+                  "value": "2026-08-22 02:30",
+                  "description": "'required', 'date_format:Y-m-d H:i', 'after:now'",
+                  "type": "text"
+                },
+                {
+                  "key": "user_id",
+                  "value": "2",
+                  "description": "'required', 'integer', Rule::exists('users', 'id')->whereNull('deleted_at')->where('role',1)",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{local}}api/tasks/2/update?_method=put",
+              "host": [
+                "{{local}}api"
+              ],
+              "path": [
+                "tasks",
+                "2",
+                "update"
+              ],
+              "query": [
+                {
+                  "key": "_method",
+                  "value": "put"
+                }
+              ]
+            },
+            "description": "## Update Task\n\nThis endpoint allows you to update an existing task by its ID. It uses the HTTP POST method with a query parameter to specify that the request should be treated as a PUT request.\n\n### Request\n\n- **Method**: POST\n    \n- **Endpoint**: `{{local}}api/tasks/2/update?_method=put`\n    \n\n### Request Body (form-data)\n\nThe request body must be sent as form-data and includes the following parameters:\n\n- **title** (text, required):\n    \n    - A string representing the title of the task. It must be between 5 and 255 characters long.\n        \n- **user_id** (text, required):\n    \n    - An integer representing the ID of the user associated with the task. The user ID must exist in the 'users' table and should have a role value of 1, while ensuring that the user is not marked as deleted.\n        \n\n### Response\n\nUpon successful execution, the API will respond with a status code of 200 and a JSON object containing the following structure:\n\n- **key**: A string that may contain additional information.\n    \n- **msg**: A message string that provides context about the response.\n    \n- **code**: An integer representing the response code.\n    \n- **response_status**: An object indicating whether there was an error. It includes:\n    \n    - **error**: A boolean indicating if an error occurred.\n        \n    - **validation_errors**: An array that contains any validation errors if applicable.\n        \n- **data**: An object containing the updated task details:\n    \n    - **id**: The ID of the task.\n        \n    - **title**: The updated title of the task.\n        \n    - **description**: The description of the task.\n        \n    - **status**: An object containing:\n        \n        - **value**: The status value.\n            \n        - **slug**: A slug representation of the status.\n            \n        - **label**: A label for the status.\n            \n    - **due_date**: The due date of the task.\n        \n    - **created_at**: The timestamp when the task was created.\n        \n    - **user**: An object representing the user associated with the task, containing:\n        \n        - **id**: The user's ID.\n            \n        - **name**: The user's name.\n            \n        - **email**: The user's email.\n            \n    - **dependencies**: An array of dependencies related to the task.\n        \n\nEnsure to handle any validation errors that may arise during the request."
+          },
+          "response": [
+            {
+              "name": "Access Denied",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "title",
+                      "value": "tests new",
+                      "description": "'required', 'string', 'min:5', 'max:255'",
+                      "type": "text"
+                    },
+                    {
+                      "key": "description",
+                      "value": "tests tests",
+                      "description": "'nullable', 'string', 'max:1000'",
+                      "type": "text"
+                    },
+                    {
+                      "key": "due_date",
+                      "value": "2026-08-22 02:30",
+                      "description": "'required', 'date_format:Y-m-d H:i', 'after:now'",
+                      "type": "text"
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "2",
+                      "description": "'required', 'integer', Rule::exists('users', 'id')->whereNull('deleted_at')->where('role',1)",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/tasks/2/update?_method=put",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks",
+                    "2",
+                    "update"
+                  ],
+                  "query": [
+                    {
+                      "key": "_method",
+                      "value": "put"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 20:43:02 GMT"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"fail\",\n    \"msg\": \"Access Denied\",\n    \"code\": 403,\n    \"response_status\": {\n        \"error\": true,\n        \"validation_errors\": {\n            \"line\": 643,\n            \"file\": \"D:\\\\projects\\\\task-manager-api\\\\vendor\\\\laravel\\\\framework\\\\src\\\\Illuminate\\\\Foundation\\\\Exceptions\\\\Handler.php\"\n        }\n    },\n    \"data\": null\n}"
+            },
+            {
+              "name": "validation error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "title",
+                      "value": "tests new",
+                      "description": "'required', 'string', 'min:5', 'max:255'",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "description",
+                      "value": "tests tests",
+                      "description": "'nullable', 'string', 'max:1000'",
+                      "type": "text"
+                    },
+                    {
+                      "key": "due_date",
+                      "value": "2026-08-22 02:30",
+                      "description": "'required', 'date_format:Y-m-d H:i', 'after:now'",
+                      "type": "text"
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "2",
+                      "description": "'required', 'integer', Rule::exists('users', 'id')->whereNull('deleted_at')->where('role',1)",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/tasks/2/update?_method=put",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks",
+                    "2",
+                    "update"
+                  ],
+                  "query": [
+                    {
+                      "key": "_method",
+                      "value": "put"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 20:43:27 GMT"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"fail\",\n    \"msg\": \"The title field is required.\",\n    \"code\": 422,\n    \"response_status\": {\n        \"error\": true,\n        \"validation_errors\": {\n            \"line\": 168,\n            \"file\": \"D:\\\\projects\\\\task-manager-api\\\\vendor\\\\laravel\\\\framework\\\\src\\\\Illuminate\\\\Foundation\\\\Http\\\\FormRequest.php\"\n        }\n    },\n    \"data\": null\n}"
+            },
+            {
+              "name": "success update",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "title",
+                      "value": "tests new",
+                      "description": "'required', 'string', 'min:5', 'max:255'",
+                      "type": "text"
+                    },
+                    {
+                      "key": "description",
+                      "value": "tests tests",
+                      "description": "'nullable', 'string', 'max:1000'",
+                      "type": "text"
+                    },
+                    {
+                      "key": "due_date",
+                      "value": "2026-08-22 02:30",
+                      "description": "'required', 'date_format:Y-m-d H:i', 'after:now'",
+                      "type": "text"
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "2",
+                      "description": "'required', 'integer', Rule::exists('users', 'id')->whereNull('deleted_at')->where('role',1)",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/tasks/2/update?_method=put",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks",
+                    "2",
+                    "update"
+                  ],
+                  "query": [
+                    {
+                      "key": "_method",
+                      "value": "put"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 20:43:42 GMT"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"success\",\n    \"msg\": \"Task updated successfully\",\n    \"code\": 200,\n    \"response_status\": {\n        \"error\": false,\n        \"validation_errors\": []\n    },\n    \"data\": {\n        \"id\": 2,\n        \"title\": \"tests new\",\n        \"description\": \"tests tests\",\n        \"status\": {\n            \"value\": 1,\n            \"slug\": \"PENDING\",\n            \"label\": \"PENDING\"\n        },\n        \"due_date\": \"2026-08-22 02:30\",\n        \"created_at\": \"2025-07-06 21:00\",\n        \"user\": {\n            \"id\": 2,\n            \"name\": \"Linda Metz\",\n            \"email\": \"godfrey.hoppe@example.com\"\n        },\n        \"dependencies\": []\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "update status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{user_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "status",
+                  "value": "2",
+                  "description": "'required', 'numeric', 1 = Pending, 2 = Completed, 3 = Cancelled,",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{local}}api/tasks/2/update-status?_method=patch",
+              "host": [
+                "{{local}}api"
+              ],
+              "path": [
+                "tasks",
+                "2",
+                "update-status"
+              ],
+              "query": [
+                {
+                  "key": "_method",
+                  "value": "patch"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Access Denied",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "status",
+                      "value": "3",
+                      "description": "'required', 'numeric', 1 = Pending, 2 = In Progress, 3 = Completed, 4 = Overdue",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/tasks/4/update-status?_method=patch",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks",
+                    "4",
+                    "update-status"
+                  ],
+                  "query": [
+                    {
+                      "key": "_method",
+                      "value": "patch"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 20:51:35 GMT"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"fail\",\n    \"msg\": \"Access Denied\",\n    \"code\": 403,\n    \"response_status\": {\n        \"error\": true,\n        \"validation_errors\": {\n            \"line\": 643,\n            \"file\": \"D:\\\\projects\\\\task-manager-api\\\\vendor\\\\laravel\\\\framework\\\\src\\\\Illuminate\\\\Foundation\\\\Exceptions\\\\Handler.php\"\n        }\n    },\n    \"data\": null\n}"
+            },
+            {
+              "name": "validation error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "status",
+                      "value": "3",
+                      "description": "'required', 'numeric', 1 = Pending, 2 = In Progress, 3 = Completed, 4 = Overdue",
+                      "type": "text",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/tasks/4/update-status?_method=patch",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks",
+                    "4",
+                    "update-status"
+                  ],
+                  "query": [
+                    {
+                      "key": "_method",
+                      "value": "patch"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 20:55:43 GMT"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"fail\",\n    \"msg\": \"The status field is required.\",\n    \"code\": 422,\n    \"response_status\": {\n        \"error\": true,\n        \"validation_errors\": {\n            \"line\": 168,\n            \"file\": \"D:\\\\projects\\\\task-manager-api\\\\vendor\\\\laravel\\\\framework\\\\src\\\\Illuminate\\\\Foundation\\\\Http\\\\FormRequest.php\"\n        }\n    },\n    \"data\": null\n}"
+            },
+            {
+              "name": "not authorized",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "status",
+                      "value": "3",
+                      "description": "'required', 'numeric', 1 = Pending, 2 = In Progress, 3 = Completed, 4 = Overdue",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/tasks/4/update-status?_method=patch",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks",
+                    "4",
+                    "update-status"
+                  ],
+                  "query": [
+                    {
+                      "key": "_method",
+                      "value": "patch"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 20:56:04 GMT"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"fail\",\n    \"msg\": \"You are not authorized to update this task\",\n    \"code\": 422,\n    \"response_status\": {\n        \"error\": true,\n        \"validation_errors\": {\n            \"line\": 168,\n            \"file\": \"D:\\\\projects\\\\task-manager-api\\\\vendor\\\\laravel\\\\framework\\\\src\\\\Illuminate\\\\Foundation\\\\Http\\\\FormRequest.php\"\n        }\n    },\n    \"data\": null\n}"
+            },
+            {
+              "name": "success update status",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "status",
+                      "value": "2",
+                      "description": "'required', 'numeric', 1 = Pending, 2 = Completed, 3 = Cancelled,",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/tasks/2/update-status?_method=patch",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks",
+                    "2",
+                    "update-status"
+                  ],
+                  "query": [
+                    {
+                      "key": "_method",
+                      "value": "patch"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 21:01:43 GMT"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"success\",\n    \"msg\": \"Task status updated successfully\",\n    \"code\": 200,\n    \"response_status\": {\n        \"error\": false,\n        \"validation_errors\": []\n    },\n    \"data\": {\n        \"id\": 2,\n        \"title\": \"tests new\",\n        \"description\": \"tests tests\",\n        \"status\": {\n            \"value\": 2,\n            \"slug\": \"COMPLETED\",\n            \"label\": \"COMPLETED\"\n        },\n        \"due_date\": \"2026-08-22 02:30\",\n        \"created_at\": \"2025-07-06 21:00\",\n        \"user\": {\n            \"id\": 1,\n            \"name\": \"Prof. Korey Greenfelder\",\n            \"email\": \"lucile73@info.org\"\n        },\n        \"dependencies\": []\n    }\n}"
+            },
+            {
+              "name": "same status",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "status",
+                      "value": "2",
+                      "description": "'required', 'numeric', 1 = Pending, 2 = Completed, 3 = Cancelled,",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/tasks/2/update-status?_method=patch",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks",
+                    "2",
+                    "update-status"
+                  ],
+                  "query": [
+                    {
+                      "key": "_method",
+                      "value": "patch"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 21:03:01 GMT"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"fail\",\n    \"msg\": \"Task status cannot be the same\",\n    \"code\": 422,\n    \"response_status\": {\n        \"error\": true,\n        \"validation_errors\": {\n            \"line\": 168,\n            \"file\": \"D:\\\\projects\\\\task-manager-api\\\\vendor\\\\laravel\\\\framework\\\\src\\\\Illuminate\\\\Foundation\\\\Http\\\\FormRequest.php\"\n        }\n    },\n    \"data\": null\n}"
+            },
+            {
+              "name": "update status",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "status",
+                      "value": "2",
+                      "description": "'required', 'numeric', 1 = Pending, 2 = Completed, 3 = Cancelled,",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/tasks/2/update-status?_method=patch",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks",
+                    "2",
+                    "update-status"
+                  ],
+                  "query": [
+                    {
+                      "key": "_method",
+                      "value": "patch"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 08 Jul 2025 16:59:52 GMT"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"fail\",\n    \"msg\": \"Cannot mark task as completed unless all dependencies are completed or cancelled.\",\n    \"code\": 422,\n    \"response_status\": {\n        \"error\": true,\n        \"validation_errors\": {\n            \"line\": 168,\n            \"file\": \"D:\\\\projects\\\\task-manager-api\\\\vendor\\\\laravel\\\\framework\\\\src\\\\Illuminate\\\\Foundation\\\\Http\\\\FormRequest.php\"\n        }\n    },\n    \"data\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "assign to user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{manager_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "user_id",
+                  "value": "1",
+                  "description": "'required', 'integer', Rule::exists('users', 'id')->whereNull('deleted_at')->where('role',1)",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{local}}api/tasks/2/assign-user?_method=patch",
+              "host": [
+                "{{local}}api"
+              ],
+              "path": [
+                "tasks",
+                "2",
+                "assign-user"
+              ],
+              "query": [
+                {
+                  "key": "_method",
+                  "value": "patch"
+                }
+              ]
+            },
+            "description": "### Assign User to Task\n\nThis endpoint allows you to assign a user to a specific task by updating the task's user assignment.\n\n- **Method**: `POST`\n    \n- **Endpoint**: `{{local}}api/tasks/2/assign-user?_method=patch`\n    \n\n#### Request Parameters\n\nThe request body must be sent as `form-data` and includes the following parameter:\n\n- **user_id** (type: text): The ID of the user you want to assign to the task.\n    \n\n#### Response Format\n\nUpon a successful request, the server responds with a status code of `200` and a JSON object containing the following structure:\n\n``` json\n{\n  \"key\": \"\",\n  \"msg\": \"\",\n  \"code\": 0,\n  \"response_status\": {\n    \"error\": true,\n    \"validation_errors\": []\n  },\n  \"data\": {\n    \"id\": 0,\n    \"title\": \"\",\n    \"description\": \"\",\n    \"status\": {\n      \"value\": 0,\n      \"slug\": \"\",\n      \"label\": \"\"\n    },\n    \"due_date\": \"\",\n    \"created_at\": \"\",\n    \"user\": {\n      \"id\": 0,\n      \"name\": \"\",\n      \"email\": \"\"\n    },\n    \"dependencies\": []\n  }\n}\n\n ```\n\n- **key**: A string key for the response.\n    \n- **msg**: A message string that may provide additional information.\n    \n- **code**: A numeric code indicating the response status.\n    \n- **response_status**: An object indicating whether there was an error and any validation errors.\n    \n- **data**: An object containing details about the task, including its ID, title, description, status, due date, creation date, assigned user information, and any dependencies.\n    \n\nThis endpoint is useful for managing task assignments and ensuring that tasks are associated with the correct users."
+          },
+          "response": [
+            {
+              "name": "Access Denied",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}api/tasks/1/assign-user?_method=patch",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks",
+                    "1",
+                    "assign-user"
+                  ],
+                  "query": [
+                    {
+                      "key": "_method",
+                      "value": "patch"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 20:28:09 GMT"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"fail\",\n    \"msg\": \"Access Denied\",\n    \"code\": 403,\n    \"response_status\": {\n        \"error\": true,\n        \"validation_errors\": {\n            \"line\": 643,\n            \"file\": \"D:\\\\projects\\\\task-manager-api\\\\vendor\\\\laravel\\\\framework\\\\src\\\\Illuminate\\\\Foundation\\\\Exceptions\\\\Handler.php\"\n        }\n    },\n    \"data\": null\n}"
+            },
+            {
+              "name": "validation error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "user_id",
+                      "value": "1",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/tasks/1/assign-user?_method=patch",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks",
+                    "1",
+                    "assign-user"
+                  ],
+                  "query": [
+                    {
+                      "key": "_method",
+                      "value": "patch"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 20:33:47 GMT"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"fail\",\n    \"msg\": \"Task cannot be assigned to a user when it is not pending\",\n    \"code\": 422,\n    \"response_status\": {\n        \"error\": true,\n        \"validation_errors\": {\n            \"line\": 168,\n            \"file\": \"D:\\\\projects\\\\task-manager-api\\\\vendor\\\\laravel\\\\framework\\\\src\\\\Illuminate\\\\Foundation\\\\Http\\\\FormRequest.php\"\n        }\n    },\n    \"data\": null\n}"
+            },
+            {
+              "name": "success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "user_id",
+                      "value": "1",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/tasks/2/assign-user?_method=patch",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks",
+                    "2",
+                    "assign-user"
+                  ],
+                  "query": [
+                    {
+                      "key": "_method",
+                      "value": "patch"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 20:35:35 GMT"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"success\",\n    \"msg\": \"User assigned to task successfully\",\n    \"code\": 200,\n    \"response_status\": {\n        \"error\": false,\n        \"validation_errors\": []\n    },\n    \"data\": {\n        \"id\": 2,\n        \"title\": \"Pariatur repudiandae occaecati et dolore.\",\n        \"description\": \"Ab saepe officia neque quidem rerum voluptates enim. Libero nemo doloremque neque quod. Accusamus debitis mollitia at similique excepturi. Commodi dolorem ut architecto libero mollitia quis. Perspiciatis aut ducimus neque commodi.\",\n        \"status\": {\n            \"value\": 1,\n            \"slug\": \"PENDING\",\n            \"label\": \"PENDING\"\n        },\n        \"due_date\": \"2025-07-10 13:36\",\n        \"created_at\": \"2025-07-06 21:00\",\n        \"user\": {\n            \"id\": 1,\n            \"name\": \"Prof. Korey Greenfelder\",\n            \"email\": \"lucile73@info.org\"\n        },\n        \"dependencies\": []\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "add task dependencies",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{manager_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "dependency_ids[]",
+                  "value": "9",
+                  "description": "'required','integer', 'exists:tasks,id',new CheckIfItRepeatedDependency($taskId)",
+                  "type": "text"
+                },
+                {
+                  "key": "dependency_ids[]",
+                  "value": "7",
+                  "description": "required,'integer', 'exists:tasks,id',new CheckIfItRepeatedDependency($taskId)",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{local}}api/tasks/2/add-dependencies",
+              "host": [
+                "{{local}}api"
+              ],
+              "path": [
+                "tasks",
+                "2",
+                "add-dependencies"
+              ]
+            },
+            "description": "## Add Dependencies to a Task\n\nThis endpoint allows you to add dependencies to a specific task identified by its ID.\n\n### Request\n\n- **Method**: `POST`\n    \n- **Endpoint**: `{{local}}api/tasks/2/add-dependencies`\n    \n\n### Request Body\n\nThe request body must be sent in `form-data` format and must include the following parameter:\n\n- **dependency_ids\\[\\]** (required):\n    \n    - **Type**: text\n        \n    - **Description**: An array of integers representing the IDs of the tasks that are to be added as dependencies. The IDs must exist in the tasks table and should not create a circular dependency with the specified task.\n        \n\n### Response\n\nUpon successful execution, the API will return a response with the following structure:\n\n- **Status**: `200 OK`\n    \n- **Content-Type**: `application/json`\n    \n- **Response Body**:\n    \n    - **key**: A string key for the response.\n        \n    - **msg**: A message string providing additional information.\n        \n    - **code**: A numeric code indicating the status of the request.\n        \n    - **response_status**: An object containing:\n        \n        - **error**: A boolean indicating if there was an error.\n            \n        - **validation_errors**: An array of validation error messages, if any.\n            \n    - **data**: An object containing details about the task and its dependencies:\n        \n        - **id**: The ID of the task.\n            \n        - **title**: The title of the task.\n            \n        - **description**: The description of the task.\n            \n        - **status**: An object with:\n            \n            - **value**: The status value.\n                \n            - **slug**: A slug representing the status.\n                \n            - **label**: A label for the status.\n                \n        - **due_date**: The due date of the task.\n            \n        - **created_at**: The timestamp when the task was created.\n            \n        - **user**: An object containing:\n            \n            - **id**: The ID of the user assigned to the task.\n                \n            - **name**: The name of the user.\n                \n            - **email**: The email of the user.\n                \n        - **dependencies**: An array of dependency tasks, each containing similar fields as the main task.\n            \n\n### Example Response\n\n``` json\n{\n  \"key\": \"\",\n  \"msg\": \"\",\n  \"code\": 0,\n  \"response_status\": {\n    \"error\": true,\n    \"validation_errors\": []\n  },\n  \"data\": {\n    \"id\": 0,\n    \"title\": \"\",\n    \"description\": \"\",\n    \"status\": {\n      \"value\": 0,\n      \"slug\": \"\",\n      \"label\": \"\"\n    },\n    \"due_date\": \"\",\n    \"created_at\": \"\",\n    \"user\": {\n      \"id\": 0,\n      \"name\": \"\",\n      \"email\": \"\"\n    },\n    \"dependencies\": [\n      {\n        \"id\": 0,\n        \"title\": \"\",\n        \"description\": \"\",\n        \"status\": {\n          \"value\": 0,\n          \"slug\": \"\",\n          \"label\": \"\"\n        },\n        \"due_date\": \"\",\n        \"created_at\": \"\",\n        \"user\": null,\n        \"dependencies\": []\n      }\n    ]\n  }\n}\n\n ```"
+          },
+          "response": [
+            {
+              "name": "validation error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "dependency_ids[]",
+                      "value": "1",
+                      "description": "'required','integer', 'exists:tasks,id',new CheckIfItRepeatedDependency($taskId)",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "dependency_ids[]",
+                      "value": "7",
+                      "description": "required,'integer', 'exists:tasks,id',new CheckIfItRepeatedDependency($taskId)",
+                      "type": "text",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/tasks/2/add-dependencies",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks",
+                    "2",
+                    "add-dependencies"
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 08 Jul 2025 16:32:00 GMT"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "1"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"fail\",\n    \"msg\": \"The dependency ids field is required.\",\n    \"code\": 422,\n    \"response_status\": {\n        \"error\": true,\n        \"validation_errors\": {\n            \"line\": 168,\n            \"file\": \"D:\\\\projects\\\\task-manager-api\\\\vendor\\\\laravel\\\\framework\\\\src\\\\Illuminate\\\\Foundation\\\\Http\\\\FormRequest.php\"\n        }\n    },\n    \"data\": null\n}"
+            },
+            {
+              "name": "Access Denied",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "dependency_ids[]",
+                      "value": "1",
+                      "description": "'required','integer', 'exists:tasks,id',new CheckIfItRepeatedDependency($taskId)",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "dependency_ids[]",
+                      "value": "7",
+                      "description": "required,'integer', 'exists:tasks,id',new CheckIfItRepeatedDependency($taskId)",
+                      "type": "text",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/tasks/2/add-dependencies",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks",
+                    "2",
+                    "add-dependencies"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 08 Jul 2025 16:32:22 GMT"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"fail\",\n    \"msg\": \"Access Denied\",\n    \"code\": 403,\n    \"response_status\": {\n        \"error\": true,\n        \"validation_errors\": {\n            \"line\": 643,\n            \"file\": \"D:\\\\projects\\\\task-manager-api\\\\vendor\\\\laravel\\\\framework\\\\src\\\\Illuminate\\\\Foundation\\\\Exceptions\\\\Handler.php\"\n        }\n    },\n    \"data\": null\n}"
+            },
+            {
+              "name": "success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "dependency_ids[]",
+                      "value": "9",
+                      "description": "'required','integer', 'exists:tasks,id',new CheckIfItRepeatedDependency($taskId)",
+                      "type": "text"
+                    },
+                    {
+                      "key": "dependency_ids[]",
+                      "value": "7",
+                      "description": "required,'integer', 'exists:tasks,id',new CheckIfItRepeatedDependency($taskId)",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/tasks/2/add-dependencies",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "tasks",
+                    "2",
+                    "add-dependencies"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 08 Jul 2025 16:53:15 GMT"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"success\",\n    \"msg\": \"Dependency added successfully\",\n    \"code\": 200,\n    \"response_status\": {\n        \"error\": false,\n        \"validation_errors\": []\n    },\n    \"data\": {\n        \"id\": 2,\n        \"title\": \"tests new\",\n        \"description\": \"tests tests\",\n        \"status\": {\n            \"value\": 2,\n            \"slug\": \"COMPLETED\",\n            \"label\": \"COMPLETED\"\n        },\n        \"due_date\": \"2026-08-22 02:30\",\n        \"created_at\": \"2025-07-06 21:00\",\n        \"user\": {\n            \"id\": 1,\n            \"name\": \"Prof. Korey Greenfelder\",\n            \"email\": \"lucile73@info.org\"\n        },\n        \"dependencies\": [\n            {\n                \"id\": 7,\n                \"title\": \"Assumenda nulla ut ut rem maiores quia explicabo.\",\n                \"description\": \"Similique tenetur eligendi beatae. Impedit adipisci officia ut quia excepturi autem. Ipsam dignissimos vitae totam et pariatur.\",\n                \"status\": {\n                    \"value\": 1,\n                    \"slug\": \"PENDING\",\n                    \"label\": \"PENDING\"\n                },\n                \"due_date\": \"2025-07-19 03:15\",\n                \"created_at\": \"2025-07-06 21:00\",\n                \"user\": null,\n                \"dependencies\": []\n            },\n            {\n                \"id\": 9,\n                \"title\": \"Ut reiciendis maiores modi est rerum iure voluptatibus.\",\n                \"description\": \"Minima vel quod magnam dolor. Aut non animi dolores animi deleniti. Atque sequi labore odio asperiores aut incidunt nam. Aspernatur maxime facere autem accusamus assumenda eveniet aut.\",\n                \"status\": {\n                    \"value\": 1,\n                    \"slug\": \"PENDING\",\n                    \"label\": \"PENDING\"\n                },\n                \"due_date\": \"2025-08-03 08:49\",\n                \"created_at\": \"2025-07-06 21:00\",\n                \"user\": null,\n                \"dependencies\": []\n            }\n        ]\n    }\n}"
+            }
+          ]
+        }
+      ],
+      "auth": {
+        "type": "noauth"
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Parse the response body as JSON\r",
+                  "const jsonResponse = pm.response.json();\r",
+                  "\r",
+                  "// Extract the desired value from the response\r",
+                  "var token = jsonResponse.data.token;\r",
+                  "var type = jsonResponse.data.type;\r",
+                  "\r",
+                  "type == 'user' ?\r",
+                  "pm.collectionVariables.set(\"user_token\",token) :\r",
+                  "pm.collectionVariables.set(\"manager_token\",token)\r",
+                  ";"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "email",
+                  "value": "leonie.stoltenberg@info.org",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "password",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{local}}api/login",
+              "host": [
+                "{{local}}api"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "validation error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "email",
+                      "value": "",
+                      "type": "text"
+                    },
+                    {
+                      "key": "password",
+                      "value": "",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/login",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 06 Jul 2025 21:06:57 GMT"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"fail\",\n    \"msg\": \"The email field is required.\",\n    \"code\": 422,\n    \"response_status\": {\n        \"error\": true,\n        \"validation_errors\": {\n            \"line\": 168,\n            \"file\": \"D:\\\\projects\\\\task-manager-api\\\\vendor\\\\laravel\\\\framework\\\\src\\\\Illuminate\\\\Foundation\\\\Http\\\\FormRequest.php\"\n        }\n    },\n    \"data\": null\n}"
+            },
+            {
+              "name": "success login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "email",
+                      "value": "lucile73@info.org",
+                      "type": "text"
+                    },
+                    {
+                      "key": "password",
+                      "value": "password",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{local}}api/login",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 06 Jul 2025 21:12:14 GMT"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"success\",\n    \"msg\": \"data retrieved successfully\",\n    \"code\": 200,\n    \"response_status\": {\n        \"error\": false,\n        \"validation_errors\": []\n    },\n    \"data\": {\n        \"token\": \"1|Nb8GIwC1M8mI3EvuPaNgzeaAnjhTV3dgt1BXzwyK8e1d5b7f\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "logout",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Parse the response body as JSON\r",
+                  "const jsonResponse = pm.response.json();\r",
+                  "\r",
+                  "// Extract the desired value from the response\r",
+                  "var token = jsonResponse.data.token;\r",
+                  "\r",
+                  "// Set the extracted value to a collection variabl\r",
+                  "pm.collectionVariables.set(\"token\",token);"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{user_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{local}}api/logout",
+              "host": [
+                "{{local}}api"
+              ],
+              "path": [
+                "logout"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "success logout",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}api/logout",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "logout"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 06 Jul 2025 21:24:01 GMT"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"success\",\n    \"msg\": \"Logout successfully\",\n    \"code\": 200,\n    \"response_status\": {\n        \"error\": false,\n        \"validation_errors\": []\n    },\n    \"data\": null\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "users",
+      "item": [
+        {
+          "name": "list of users",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{user_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local}}api/users",
+              "host": [
+                "{{local}}api"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "## Get Users\n\nThis endpoint retrieves a list of users from the system.\n\n### Request\n\n- **Method**: `GET`\n    \n- **Endpoint**: `{{local}}api/users`\n    \n\n### Response\n\n- **Status Code**: `200 OK`\n    \n- **Content-Type**: `application/json`\n    \n\n### Response Structure\n\nThe response will be in JSON format and includes the following fields:\n\n- `key`: A string key for the response.\n    \n- `msg`: A string message providing additional information.\n    \n- `code`: An integer code representing the response status.\n    \n- `response_status`: An object containing:\n    \n    - `error`: A boolean indicating if there was an error.\n        \n    - `validation_errors`: An array of validation error messages, if any.\n        \n- `data`: An array of user objects, each containing:\n    \n    - `id`: The unique identifier for the user.\n        \n    - `name`: The name of the user.\n        \n    - `email`: The email address of the user.\n        \n\n### Example Response\n\n``` json\n{\n  \"key\": \"\",\n  \"msg\": \"\",\n  \"code\": 0,\n  \"response_status\": {\n    \"error\": true,\n    \"validation_errors\": []\n  },\n  \"data\": [\n    {\n      \"id\": 0,\n      \"name\": \"\",\n      \"email\": \"\"\n    }\n  ]\n}\n\n ```\n\nThis endpoint is useful for fetching user information, and the expected response format allows for easy parsing of user data and error handling."
+          },
+          "response": [
+            {
+              "name": "not authorized",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}api/users",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 20:12:55 GMT"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"fail\",\n    \"msg\": \"Access Denied\",\n    \"code\": 403,\n    \"response_status\": {\n        \"error\": true,\n        \"validation_errors\": {\n            \"line\": 643,\n            \"file\": \"D:\\\\projects\\\\task-manager-api\\\\vendor\\\\laravel\\\\framework\\\\src\\\\Illuminate\\\\Foundation\\\\Exceptions\\\\Handler.php\"\n        }\n    },\n    \"data\": null\n}"
+            },
+            {
+              "name": "list of users",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}api/users",
+                  "host": [
+                    "{{local}}api"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.25.2"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.10"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 07 Jul 2025 20:13:54 GMT"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"key\": \"success\",\n    \"msg\": \"Users retrieved successfully\",\n    \"code\": 200,\n    \"response_status\": {\n        \"error\": false,\n        \"validation_errors\": []\n    },\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Prof. Korey Greenfelder\",\n            \"email\": \"lucile73@info.org\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Linda Metz\",\n            \"email\": \"godfrey.hoppe@example.com\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Berry Rolfson\",\n            \"email\": \"maci.corkery@example.net\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Hugh Botsford\",\n            \"email\": \"gregg08@example.org\"\n        },\n        {\n            \"id\": 8,\n            \"name\": \"Santino Cummerata DVM\",\n            \"email\": \"griffin.conroy@example.net\"\n        },\n        {\n            \"id\": 10,\n            \"name\": \"Tracy Keeling\",\n            \"email\": \"mueller.olin@example.com\"\n        },\n        {\n            \"id\": 13,\n            \"name\": \"Elsie Block\",\n            \"email\": \"vfeest@example.net\"\n        },\n        {\n            \"id\": 14,\n            \"name\": \"Ignacio Kuhlman\",\n            \"email\": \"kchamplin@example.org\"\n        },\n        {\n            \"id\": 15,\n            \"name\": \"Mr. Soledad Baumbach\",\n            \"email\": \"jose80@example.org\"\n        },\n        {\n            \"id\": 16,\n            \"name\": \"Mylene Heaney\",\n            \"email\": \"nader.lafayette@example.org\"\n        },\n        {\n            \"id\": 17,\n            \"name\": \"Gay Bahringer\",\n            \"email\": \"leanne51@example.org\"\n        },\n        {\n            \"id\": 18,\n            \"name\": \"Camryn Stiedemann\",\n            \"email\": \"napoleon40@example.com\"\n        },\n        {\n            \"id\": 19,\n            \"name\": \"Jaquan Hamill II\",\n            \"email\": \"stehr.clovis@example.com\"\n        },\n        {\n            \"id\": 20,\n            \"name\": \"Lelah Leannon\",\n            \"email\": \"dagmar.adams@example.org\"\n        },\n        {\n            \"id\": 21,\n            \"name\": \"Jeanette Jerde\",\n            \"email\": \"jacobi.roberta@example.org\"\n        },\n        {\n            \"id\": 22,\n            \"name\": \"Eli Ebert\",\n            \"email\": \"kohler.addison@example.org\"\n        },\n        {\n            \"id\": 25,\n            \"name\": \"Prof. Freeman Gleason III\",\n            \"email\": \"golden26@example.org\"\n        },\n        {\n            \"id\": 27,\n            \"name\": \"Roderick Jast DDS\",\n            \"email\": \"jordan.langosh@example.org\"\n        },\n        {\n            \"id\": 33,\n            \"name\": \"Dr. Arlo Feil\",\n            \"email\": \"mckenzie.vallie@example.net\"\n        },\n        {\n            \"id\": 34,\n            \"name\": \"Wyatt Roob MD\",\n            \"email\": \"jones.natalia@example.org\"\n        },\n        {\n            \"id\": 36,\n            \"name\": \"Adaline Schroeder\",\n            \"email\": \"bednar.rolando@example.org\"\n        },\n        {\n            \"id\": 37,\n            \"name\": \"Rickey Hegmann\",\n            \"email\": \"emmie98@example.com\"\n        },\n        {\n            \"id\": 38,\n            \"name\": \"Shane DuBuque\",\n            \"email\": \"keebler.dino@example.org\"\n        },\n        {\n            \"id\": 39,\n            \"name\": \"Ms. Carole Waelchi Jr.\",\n            \"email\": \"barrows.lacy@example.org\"\n        },\n        {\n            \"id\": 40,\n            \"name\": \"Mrs. Carli Waelchi V\",\n            \"email\": \"marc32@example.org\"\n        }\n    ]\n}"
+            }
+          ]
+        }
+      ]
     }
   ],
-  "paths": {
-    "/tasks": {
-      "get": {
-        "summary": "List all tasks",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "status",
-            "schema": {
-              "type": "integer"
-            },
-            "description": "Filter by task status (1=Pending, 2=In Progress, 3=Completed, 4=Overdue)"
-          },
-          {
-            "in": "query",
-            "name": "start_date",
-            "schema": {
-              "type": "string",
-              "format": "date (Y-m-d)"
-            },
-            "description": "Filter from due date"
-          },
-          {
-            "in": "query",
-            "name": "end_date",
-            "schema": {
-              "type": "string",
-              "format": "date (Y-m-d)"
-            },
-            "description": "Filter to due date"
-          },
-          {
-            "in": "query",
-            "name": "sort_by",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "created_at",
-                "due_date",
-                "priority"
-              ]
-            },
-            "description": "Field to sort by"
-          },
-          {
-            "in": "query",
-            "name": "sort_direction",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ]
-            },
-            "description": "Sort direction"
-          },
-          {
-            "in": "query",
-            "name": "text_search",
-            "schema": {
-              "type": "string"
-            },
-            "description": "filter the tasks according to the text search"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of tasks"
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new task",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "title",
-                  "due_date"
-                ],
-                "properties": {
-                  "title": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "due_date": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "priority": {
-                    "type": "integer",
-                    "description": "1=Low, 2=Medium, 3=High"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Task created"
-          },
-          "429": {
-            "description": "Too many requests (Rate Limited)"
-          }
-        }
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
       }
     },
-    "/tasks/{id}/status": {
-      "patch": {
-        "summary": "Update task status",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "status"
-                ],
-                "properties": {
-                  "status": {
-                    "type": "integer",
-                    "description": "1=Pending, 2=In Progress, 3=Completed, 4=Overdue"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Task status updated"
-          }
-        }
-      }
-    },
-    "/tasks/{id}": {
-      "delete": {
-        "summary": "Soft delete a task",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Task soft deleted"
-          }
-        }
-      }
-    },
-    "/notifications/check-upcoming-tasks": {
-      "get": {
-        "summary": "Trigger command to check for upcoming tasks (within 24 hours)",
-        "description": "Custom artisan command scheduled hourly to queue email notifications for tasks due in 24 hours.",
-        "responses": {
-          "200": {
-            "description": "Command executed and matching tasks queued for notification"
-          }
-        }
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
       }
     }
-  }
+  ],
+  "variable": [
+    {
+      "key": "local",
+      "value": "http://task-manager-api.test/",
+      "type": "string"
+    },
+    {
+      "key": "manager_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_token",
+      "value": "",
+      "type": "string"
+    }
+  ]
 }
